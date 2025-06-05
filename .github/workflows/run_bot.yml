@@ -2,7 +2,12 @@ name: Run EUR/USD Strategy Bot
 
 on:
   schedule:
-    - cron: '0 */4 * * *'
+    - cron: '0 1 * * *'   # 03:00
+    - cron: '0 5 * * *'   # 07:00
+    - cron: '0 9 * * *'   # 11:00
+    - cron: '0 13 * * *'  # 15:00
+    - cron: '0 17 * * *'  # 19:00
+    - cron: '0 21 * * *'  # 23:00
   workflow_dispatch:  # 👈 دستی اجرا
 
 jobs:
