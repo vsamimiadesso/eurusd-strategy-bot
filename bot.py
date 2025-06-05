@@ -4,26 +4,36 @@ import smtplib
 from email.mime.text import MIMEText
 import os
 
-API_KEY = "XZMRAARZ7QX8XVU1"
-EMAIL_TO = "v.samimi@gmail.com"
+API_KEY = "313c54ea08cf4aedabff6cb615c6c6b4"
+EMAIL_TO = "v.samimi@yahoo.com"
 EMAIL_FROM = os.environ.get("EMAIL_FROM")
 EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD")
 
 def get_data():
-    print("📥 Fetching data from Alpha Vantage...")
-    url = f"https://www.alphavantage.co/query?function=FX_INTRADAY&from_symbol=EUR&to_symbol=USD&interval=60min&apikey={API_KEY}&outputsize=compact"
-    r = requests.get(url)
-    try:
-        data = r.json()["Time Series FX (60min)"]
-    except KeyError:
+    print("📥 Fetching data from Twelve Data...")
+    url = f"https://api.twelvedata.com/time_series?symbol=EUR/USD&interval=4h&outputsize=100&apikey={API_KEY}"
+    response = requests.get(url)
+    data = response.json()
+
+    if "values" not in data:
         print("❌ Error: Could not parse API response.")
-        print(r.text)
+        print(data)
         return None
-    df = pd.DataFrame(data).T.astype(float)
-    df.index = pd.to_datetime(df.index)
-    df = df.resample("4H").agg({"open": "first", "high": "max", "low": "min", "close": "last"})
-    print("✅ Data fetched and resampled successfully.")
-    return df.tail(100)
+
+    df = pd.DataFrame(data["values"])
+    df = df.rename(columns={
+        "datetime": "date",
+        "open": "open",
+        "high": "high",
+        "low": "low",
+        "close": "close"
+    })
+    df["date"] = pd.to_datetime(df["date"])
+    df.set_index("date", inplace=True)
+    df = df.astype(float)
+    df = df.sort_index()  # Ascending order
+    print("✅ Data fetched successfully.")
+    return df
 
 def check_strategy(df):
     print("🔍 Checking strategy conditions...")
