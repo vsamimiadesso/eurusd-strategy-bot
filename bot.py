@@ -68,7 +68,6 @@ def send_email(subject, body):
     print("✅ Email sent successfully.")
 
 def main():
-    send_email("✅ Email Test", "این یک تست ساده از سیستم ایمیل EUR/USD bot است.")
     df = get_data()
     if df is None:
         print("⛔️ Stopping bot due to data fetch failure.")
