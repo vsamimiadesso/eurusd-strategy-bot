@@ -5,7 +5,7 @@ from email.mime.text import MIMEText
 import os
 
 API_KEY = "313c54ea08cf4aedabff6cb615c6c6b4"
-EMAIL_TO = "v.samimi@yahoo.com"
+EMAILS_TO = ["v.samimi@yahoo.com", "apminaei@gmail.com"]
 EMAIL_FROM = os.environ.get("EMAIL_FROM")
 EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD")
 
@@ -60,12 +60,13 @@ def send_email(subject, body):
     msg = MIMEText(body)
     msg["Subject"] = subject
     msg["From"] = EMAIL_FROM
-    msg["To"] = EMAIL_TO
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
         server.login(EMAIL_FROM, EMAIL_PASSWORD)
-        server.send_message(msg)
-    print("✅ Email sent successfully.")
+        for email in EMAILS_TO:
+            msg["To"] = email
+            server.send_message(msg)
+    print("✅ Email sent successfully."
 
 def main():
     df = get_data()
