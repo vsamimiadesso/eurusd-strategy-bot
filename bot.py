@@ -66,7 +66,7 @@ def send_email(subject, body):
         for email in EMAILS_TO:
             msg["To"] = email
             server.send_message(msg)
-    print("✅ Email sent successfully."
+    print("✅ Email sent successfully.")
 
 def main():
     df = get_data()
