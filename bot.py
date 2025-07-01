@@ -105,6 +105,7 @@ def process_symbol(symbol: str):
 
 
 def main():
+    send_telegram("🧪 تست ارسال پیام تلگرام از بات!")
     for symbol in ["EUR/USD", "XAU/USD", "AMZN", "NFLX"]:
         process_symbol(symbol)
 
