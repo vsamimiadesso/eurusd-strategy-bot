@@ -5,3 +5,4 @@ It now processes **EUR/USD**, **XAU/USD (Gold)**, **AMZN (Amazon)**, and **NFLX 
 a notification email is sent to the configured recipients.
 
 Set the `EMAIL_FROM` and `EMAIL_PASSWORD` environment variables for sending email.
+To receive Telegram alerts, also configure `TELEGRAM_TOKEN` and `TELEGRAM_CHAT_ID`.
