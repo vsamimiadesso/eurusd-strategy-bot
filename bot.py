@@ -9,9 +9,9 @@ EMAILS_TO = ["v.samimi@yahoo.com", "apminaei@gmail.com"]
 EMAIL_FROM = os.environ.get("EMAIL_FROM")
 EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD")
 
-def get_data():
-    print("📥 Fetching data from Twelve Data...")
-    url = f"https://api.twelvedata.com/time_series?symbol=EUR/USD&interval=4h&outputsize=100&apikey={API_KEY}"
+def get_data(symbol: str):
+    print(f"📥 Fetching data for {symbol} from Twelve Data...")
+    url = f"https://api.twelvedata.com/time_series?symbol={symbol}&interval=4h&outputsize=100&apikey={API_KEY}"
     response = requests.get(url)
     data = response.json()
 
@@ -68,18 +68,23 @@ def send_email(subject, body):
             server.send_message(msg)
     print("✅ Email sent successfully.")
 
-def main():
-    df = get_data()
+def process_symbol(symbol: str):
+    df = get_data(symbol)
     if df is None:
-        print("⛔️ Stopping bot due to data fetch failure.")
+        print(f"⛔️ Stopping processing of {symbol} due to data fetch failure.")
         return
     buy, sell = check_strategy(df)
     if buy:
-        send_email("EUR/USD Buy Signal", "Buy signal detected on EUR/USD!")
+        send_email(f"{symbol} Buy Signal", f"Buy signal detected on {symbol}!")
     elif sell:
-        send_email("EUR/USD Sell Signal", "Sell signal detected on EUR/USD!")
+        send_email(f"{symbol} Sell Signal", f"Sell signal detected on {symbol}!")
     else:
-        print("ℹ️ No signal detected. Nothing to do.")
+        print(f"ℹ️ No signal detected for {symbol}.")
+
+
+def main():
+    for symbol in ["EUR/USD", "XAU/USD"]:
+        process_symbol(symbol)
 
 if __name__ == "__main__":
     main()
