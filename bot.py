@@ -59,13 +59,12 @@ def check_strategy(df):
 
 def send_email(subject, body):
     print(f"📨 Sending email: {subject}")
-    msg = MIMEText(body)
-    msg["Subject"] = subject
-    msg["From"] = EMAIL_FROM
-
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
         server.login(EMAIL_FROM, EMAIL_PASSWORD)
         for email in EMAILS_TO:
+            msg = MIMEText(body)
+            msg["Subject"] = subject
+            msg["From"] = EMAIL_FROM
             msg["To"] = email
             server.send_message(msg)
     print("✅ Email sent successfully.")
