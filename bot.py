@@ -110,7 +110,6 @@ def main():
         "AMZN",
         "NFLX",
         "CL",
-        "NDX",    
         "DOW",     
         "NVDA"
     ]:
