@@ -104,7 +104,17 @@ def process_symbol(symbol: str):
 
 
 def main():
-    for symbol in ["EUR/USD", "XAU/USD", "AMZN", "NFLX"]:
+    for symbol in [
+        "EUR/USD",
+        "XAU/USD",
+        "AMZN",
+        "NFLX",
+        "CL",
+        "IXIC",
+        "DJI",
+        "US100",
+        "NVDA",
+    ]:
         process_symbol(symbol)
 
 if __name__ == "__main__":
