@@ -108,12 +108,7 @@ def main():
         "EUR/USD",
         "XAU/USD",
         "AMZN",
-        "NFLX",
-        "CL",
-        "IXIC",
-        "DJI",
-        "US100",
-        "NVDA",
+        "NFLX"
     ]:
         process_symbol(symbol)
 
